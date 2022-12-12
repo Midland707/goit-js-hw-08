@@ -3,3 +3,26 @@ import { galleryItems } from './gallery-items';
 // Change code below this line
 
 console.log(galleryItems);
+
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const galleryList = document.querySelector('.gallery');
+
+const items = galleryItems.reduce(
+  (acc, { preview, original, description }) =>
+    acc +
+    `<a class="gallery__item" href="${original}">
+  <img class="gallery__image" src="${preview}" alt="${description}" />
+</a>
+`,
+  ''
+);
+galleryList.insertAdjacentHTML('beforeend', 'fdfdfdfdfd');
+// galleryList.insertAdjacentHTML('beforeend', items);
+
+// open modal with large image if klick on small image
+const gallery = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});

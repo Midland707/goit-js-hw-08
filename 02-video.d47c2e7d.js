@@ -1,0 +1,2 @@
+!function(){var e,t=document.querySelector("iframe"),n=new Vimeo.Player(t);function o(){localStorage.setItem("videoplayer-current-time",e),console.log("Scroll handler call every 1000ms")}n.on("timeupdate",(function(t){e=t.seconds,_.throttle(o,300)})),n.setCurrentTime(localStorage.getItem("videoplayer-current-time")).then((function(e){})).catch((function(e){e.name}))}();
+//# sourceMappingURL=02-video.d47c2e7d.js.map

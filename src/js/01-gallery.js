@@ -18,7 +18,6 @@ const items = galleryItems.reduce(
 `,
   ''
 );
-// galleryList.insertAdjacentHTML('beforeend', 'fdfdfdfdfd');
 galleryList.insertAdjacentHTML('beforeend', items);
 
 // open modal with large image if klick on small image

@@ -11,14 +11,15 @@ const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
 let currentTime;
-function saveTime() {
+
+var throttle = require('lodash.throttle');
+const saveTime = throttle(() => {
   localStorage.setItem('videoplayer-current-time', currentTime);
-  console.log('Scroll handler call every 1000ms');
-}
+}, 1000);
 
 player.on('timeupdate', function (data) {
   currentTime = data.seconds;
-  _.throttle(saveTime, 300);
+  saveTime();
 });
 
 player

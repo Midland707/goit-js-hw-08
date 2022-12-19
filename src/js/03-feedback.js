@@ -35,13 +35,22 @@ let storage = {};
 function init() {
   const loadValues = JSON.parse(localStorage.getItem('feedback-form-state'));
   if (loadValues) {
-    fromFormToInput.value = loadValues.email;
-    fromFormToTextarea.value = loadValues.message;
+    if (loadValues.email) {
+      fromFormToInput.value = loadValues.email;
+    } else {
+      fromFormToInput.value = '';
+      loadValues.email = '';
+    }
+    if (loadValues.message) {
+      fromFormToTextarea.value = loadValues.message;
+    } else {
+      fromFormToTextarea.value = '';
+      loadValues.message = '';
+    }
     storage = loadValues;
-    console.log(loadValues);
+    localStorage.setItem('feedback-form-state', JSON.stringify(storage));
   }
 }
-
 const setLocalStorage = throttle(() => {
   localStorage.setItem('feedback-form-state', JSON.stringify(storage));
 }, 500);
@@ -50,21 +59,25 @@ init();
 fromFormToInput.addEventListener('input', () => {
   if (fromFormToInput.value) {
     storage.email = fromFormToInput.value;
-    setLocalStorage();
-  }
+  } else storage.email = '';
+  setLocalStorage();
 });
 
 fromFormToTextarea.addEventListener('input', () => {
   if (fromFormToTextarea.value) {
     storage.message = fromFormToTextarea.value;
-    setLocalStorage();
-  }
+  } else storage.message = '';
+  setLocalStorage();
 });
 
 fromForm.addEventListener('submit', onFormSubmit);
 function onFormSubmit(event) {
-  event.preventDefault();
   init();
-  event.currentTarget.reset();
-  localStorage.removeItem('feedback-form-state');
+  event.preventDefault();
+  if (storage.email !== '') {
+    event.currentTarget.reset();
+    console.log(storage);
+    storage = {};
+    localStorage.removeItem('feedback-form-state');
+  } else window.alert('Email не заповнено !!! Самознищення !!!!!');
 }
